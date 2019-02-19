@@ -1,6 +1,6 @@
 # Cpp Ray Tracing Test
 A ray tracing study and test written by C++.<br>
-使用C++编写的光线追踪学习和测试。
+Still studying, the code will be often updated.
 
 ## Compile
 The program is compiled by `MinGW`. Please use `MinGW` to compile it if you want to save the time. IF YOU CAN, you can use other compiler.<br>
