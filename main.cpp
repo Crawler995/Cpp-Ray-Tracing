@@ -21,7 +21,7 @@ int main(int argc, char const *argv[])
         Vector3(0, 0, 0)
     );
 
-    Sphere sphere(Vector3(0, 0, -300), 100);
+    Sphere sphere(Vector3(0, 0, -400), 100);
     
     FILE *f = fopen("test.ppm", "wb");
     if(!f) {
@@ -37,7 +37,6 @@ int main(int argc, char const *argv[])
                 Ray3 ray = camera.generate_ray(u, v);
                 IntersectResult res = sphere.intersect(ray);
 
-                // int distance = res.distance > 255 ? 255 : res.distance;
                 int distance = 255 - std::min((res.distance / MAX_DEPTH) * 255, 255.0);
                 fprintf(f, "%d %d %d\n", distance, distance, distance);
             }

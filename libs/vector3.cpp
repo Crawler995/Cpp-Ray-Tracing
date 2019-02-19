@@ -1,7 +1,7 @@
 #include "vector3.h"
 #include <cmath>
 
-Vector3::Vector3(double a = 0, double b = 0, double c = 0) {
+Vector3::Vector3(double a, double b, double c) {
     x = a;
     y = b;
     z = c;
