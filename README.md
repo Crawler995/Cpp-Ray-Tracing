@@ -1,4 +1,4 @@
-# Cpp Ray Tracing Test
+# Cpp Ray Tracing
 A ray tracing study and test written by C++.<br>
 Still studying, the code will be often updated.
 
