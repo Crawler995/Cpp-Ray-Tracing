@@ -14,6 +14,7 @@ Ray3 PerspectiveCamera::generate_ray(double u, double v) {
         camera_pos,
         left_bottom_pos.add(horizontal.scale(u))
                        .add(vertical.scale(v))
+                       .subtract(camera_pos)
                        .normalize()
     );
 }

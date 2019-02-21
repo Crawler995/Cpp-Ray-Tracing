@@ -7,24 +7,30 @@
 #include "libs/sphere.h"
 #include "libs/intersect_result.h"
 #include "libs/perspective_camera.h"
+#include "libs/geometry_union.h"
+#include "libs/color.h"
 
 #define WIDTH 1920
 #define HEIGHT 1080
-#define MAX_DEPTH 500
+#define MAX_DEPTH 2000
 
 void show_progress(int index, int two_percent_pixel_num);
 
 int main(int argc, char const *argv[])
 {   
     PerspectiveCamera camera(
-        100, 
-        Vector3(-WIDTH / 2, -HEIGHT / 2, -400),
+        1000, 
+        Vector3(-WIDTH / 2, -HEIGHT / 2, -1000),
         Vector3(WIDTH, 0, 0),
         Vector3(0, HEIGHT, 0),
         Vector3(0, 0, 0)
     );
 
-    Sphere sphere(Vector3(0, 0, -400), 200);
+    GeometryUnion geometry_union(3,
+        Sphere(Vector3(0, 200, -1400), 200),
+        Sphere(Vector3(200, 400, -1700), 400),
+        Sphere(Vector3(0, -10000, -1600), 10000)
+    );
     
     FILE *f = fopen("test.ppm", "wb");
     if(!f) {
@@ -44,8 +50,9 @@ int main(int argc, char const *argv[])
             for(int j = 0; j < WIDTH; j++) {
                 double u = 1.0 * j / WIDTH;
                 double v = 1.0 * i / HEIGHT;
+
                 Ray3 ray = camera.generate_ray(u, v);
-                IntersectResult res = sphere.intersect(ray);
+                IntersectResult res = geometry_union.intersect(ray);
 
                 int distance = 255 - std::min((res.distance / MAX_DEPTH) * 255, 255.0);
                 fprintf(f, "%d %d %d\n", distance, distance, distance);

@@ -27,7 +27,7 @@ IntersectResult Sphere::intersect(Ray3 ray) {
     double delta = b * b - 4 * a * c;
 
     IntersectResult res(0, 0, Vector3(0, 0, 0), Vector3(0, 0, 0));
-    if(delta >= 0) {
+    if(delta >= 0 && b <= 0) {
         res.geometry = this;
         res.distance = (-b - sqrt(delta)) / (2 * a);
         res.position = ray.get_point(res.distance);
