@@ -2,6 +2,7 @@
 #include <cstdlib>
 #include <ctime>
 #include <algorithm>
+#include <string>
 #include "libs/vector3.h"
 #include "libs/ray3.h"
 #include "libs/sphere.h"
@@ -9,12 +10,13 @@
 #include "libs/perspective_camera.h"
 #include "libs/geometry_union.h"
 #include "libs/color.h"
+#include "utils/utils.h"
 
 #define WIDTH 1920
 #define HEIGHT 1080
 #define MAX_DEPTH 2000
+#define SAMPLE_TIMES 50
 
-void show_progress(int index, int two_percent_pixel_num);
 
 int main(int argc, char const *argv[])
 {   
@@ -27,38 +29,50 @@ int main(int argc, char const *argv[])
     );
 
     GeometryUnion geometry_union(3,
-        Sphere(Vector3(0, 200, -1400), 200),
-        Sphere(Vector3(200, 400, -1700), 400),
-        Sphere(Vector3(0, -10000, -1600), 10000)
+        Sphere(Vector3(0, 150, -1400), 200),
+        Sphere(Vector3(200, 350, -1700), 400),
+        Sphere(Vector3(0, -10000, -1900), 10000)
     );
     
     FILE *f = fopen("test.ppm", "wb");
     if(!f) {
-        std::cout << "failed" << std::endl;
+        std::cout << "Create file failed, please try again." << std::endl;
     }
     else {
         fprintf(f, "P3\n%d %d\n255\n", WIDTH, HEIGHT);
 
         int index = 0;
-        int two_percent_pixel_num = WIDTH * HEIGHT / 50;
-        double percent = 0;
+        int two_percent_num = WIDTH * HEIGHT / 50;
 
         clock_t start, end;
         start = clock();
 
+        std::string progress_char;
+        std::cout << "Start rendering..." << std::endl;
+
         for(int i = HEIGHT - 1; i >= 0; i--) {
             for(int j = 0; j < WIDTH; j++) {
-                double u = 1.0 * j / WIDTH;
-                double v = 1.0 * i / HEIGHT;
+                Vector3 col(0, 0, 0);
 
-                Ray3 ray = camera.generate_ray(u, v);
-                IntersectResult res = geometry_union.intersect(ray);
+                for(int k = 0; k < SAMPLE_TIMES; k++) {
+                    double u = 1.0 * (j + rand_num_0_to_1()) / WIDTH;
+                    double v = 1.0 * (i + rand_num_0_to_1()) / HEIGHT;
 
-                int distance = 255 - std::min((res.distance / MAX_DEPTH) * 255, 255.0);
-                fprintf(f, "%d %d %d\n", distance, distance, distance);
+                    Ray3 ray = camera.generate_ray(u, v);
+                    IntersectResult res = geometry_union.intersect(ray);
+
+                    col = col.add(res.normal.add(Vector3(1, 1, 1)).scale(127.5));
+                }
+
+                col = col.divide(SAMPLE_TIMES);
+                Color color((int)col.get_x(), (int)col.get_y(), (int)col.get_z());
+
+                fprintf(f, "%d %d %d\n", color.get_r(), color.get_g(), color.get_b());
 
                 index++;
-                show_progress(index, two_percent_pixel_num);
+                if(index % two_percent_num == 0) {
+                    update_progress(progress_char);
+                }
             }
         }
 
@@ -71,19 +85,4 @@ int main(int argc, char const *argv[])
     }
 
     return 0;
-}
-
-void show_progress(int index, int two_percent_pixel_num) {
-    if(index % two_percent_pixel_num == 0) {
-        std::cout << "\r[";
-        for(int i = 0; i < index / two_percent_pixel_num; i++) {
-            std::cout << "#";
-        }
-        for(int i = 0; i < 50 - index / two_percent_pixel_num; i++) {
-            std::cout << " ";
-        }
-        std::cout << "] ";
-        int percent = 100.0 * index / (WIDTH * HEIGHT);
-        std::cout << "[" << percent << "%]";
-    }
 }

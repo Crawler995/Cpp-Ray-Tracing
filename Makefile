@@ -1,5 +1,5 @@
-main: main.o vector3.o ray3.o sphere.o perspective_camera.o geometry_union.o color.o
-	g++ -o main main.o vector3.o ray3.o sphere.o perspective_camera.o geometry_union.o color.o
+main: main.o vector3.o ray3.o sphere.o perspective_camera.o geometry_union.o color.o utils.o
+	g++ -o main main.o vector3.o ray3.o sphere.o perspective_camera.o geometry_union.o color.o utils.o
 main.o: main.cpp
 	g++ -c -o main.o main.cpp
 vector3.o: libs/vector3.cpp
@@ -14,6 +14,8 @@ geometry_union.o: libs/geometry_union.cpp
 	g++ -c -o geometry_union.o libs/geometry_union.cpp
 color.o: libs/color.cpp
 	g++ -c -o color.o libs/color.cpp
+utils.o: utils/utils.cpp
+	g++ -c -o utils.o utils/utils.cpp
 
 clean:
 	rm *.o *.exe
