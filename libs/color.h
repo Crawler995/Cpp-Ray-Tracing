@@ -4,9 +4,10 @@
 class Color {
     public:
         Color(int r, int g, int b);
+        Color();
         Color copy();
         Color add(Color c);
-        Color multiply(int a);
+        Color multiply(double a);
         Color modulate(Color c);
 
         int get_r();

@@ -6,6 +6,10 @@ Color::Color(int r, int g, int b) {
     B = b;
 }
 
+Color::Color() {
+    R = G = B = 0;
+}
+
 Color Color::copy() {
     return Color(R, G, B);
 }
@@ -14,12 +18,12 @@ Color Color::add(Color c) {
     return Color(c.R + R, c.G + G, c.B + B);
 }
 
-Color Color::multiply(int a) {
-    return Color(R * a, G * a, B * a);
+Color Color::multiply(double a) {
+    return Color((int)R * a, (int)G * a, (int)B * a);
 }
 
 Color Color::modulate(Color c) {
-    return Color(R * c.R, G * c.G, B * c.B);
+    return Color((int)R * c.R, (int)G * c.G, (int)B * c.B);
 }
 
 int Color::get_r() {

@@ -11,11 +11,12 @@
 #include "libs/geometry_union.h"
 #include "libs/color.h"
 #include "utils/utils.h"
+#include "libs/phong_material.h"
 
 #define WIDTH 1920
 #define HEIGHT 1080
 #define MAX_DEPTH 2000
-#define SAMPLE_TIMES 50
+#define SAMPLE_TIMES 1
 
 
 int main(int argc, char const *argv[])
@@ -28,10 +29,12 @@ int main(int argc, char const *argv[])
         Vector3(0, 0, 0)
     );
 
+    PhongMaterial white;
+    white.set_diffuse_color(Color(255, 0, 0));
     GeometryUnion geometry_union(3,
-        Sphere(Vector3(0, 150, -1400), 200),
-        Sphere(Vector3(200, 350, -1700), 400),
-        Sphere(Vector3(0, -10000, -1900), 10000)
+        Sphere(Vector3(0, 200, -1300), 200, white),
+        Sphere(Vector3(200, 400, -1700), 400, white),
+        Sphere(Vector3(0, -10000, -1500), 10000, white)
     );
     
     FILE *f = fopen("test.ppm", "wb");
@@ -52,7 +55,7 @@ int main(int argc, char const *argv[])
 
         for(int i = HEIGHT - 1; i >= 0; i--) {
             for(int j = 0; j < WIDTH; j++) {
-                Vector3 col(0, 0, 0);
+                Color color(0, 0, 0);
 
                 for(int k = 0; k < SAMPLE_TIMES; k++) {
                     double u = 1.0 * (j + rand_num_0_to_1()) / WIDTH;
@@ -61,11 +64,12 @@ int main(int argc, char const *argv[])
                     Ray3 ray = camera.generate_ray(u, v);
                     IntersectResult res = geometry_union.intersect(ray);
 
-                    col = col.add(res.normal.add(Vector3(1, 1, 1)).scale(127.5));
+                    if(res.geometry) {
+                        color = color.add(res.geometry -> get_material().sample(ray, res.normal));
+                    }
                 }
 
-                col = col.divide(SAMPLE_TIMES);
-                Color color((int)col.get_x(), (int)col.get_y(), (int)col.get_z());
+                color = color.multiply(1.0 / SAMPLE_TIMES);
 
                 fprintf(f, "%d %d %d\n", color.get_r(), color.get_g(), color.get_b());
 
