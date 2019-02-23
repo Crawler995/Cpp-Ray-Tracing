@@ -36,10 +36,22 @@ int main(int argc, char const *argv[])
         Color(255, 255, 255),
         Color(255, 255, 255)
     );
+    PhongMaterial red(
+        0.2, 0.6, 0.2, 10,
+        Color(255, 0, 0),
+        Color(255, 0, 0),
+        Color(255, 255, 255)
+    );
+    PhongMaterial purple(
+        0.2, 0.6, 0.2, 10,
+        Color(218, 33, 255),
+        Color(218, 33, 255),
+        Color(255, 255, 255)
+    );
 
-    Sphere sphere_1(Vector3(0, 0, -1000), 200, white);
+    Sphere sphere_1(Vector3(0, 0, -1000), 200, red);
     Sphere sphere_2(Vector3(200, 200, -1400), 400, white);
-    Plane plane_1(Vector3(0, 1, 0), Vector3(0, -100, 0), white);
+    Plane plane_1(Vector3(0, 1, 0), Vector3(0, -100, 0), purple);
 
     Geometry *geos[3] = {&sphere_1, &sphere_2, &plane_1};
 
