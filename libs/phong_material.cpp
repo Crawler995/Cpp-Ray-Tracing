@@ -4,11 +4,12 @@
 #include "color.h"
 #include <cmath>
 
-PhongMaterial::PhongMaterial(double a, double d, double s, double h, Color a_c, Color d_c, Color s_c) {
+PhongMaterial::PhongMaterial(double a, double d, double s, double h, double r, Color a_c, Color d_c, Color s_c) {
     envir_factor = a;
     diffuse_factor = d;
     specular_factor = s;
     highlight_factor = h;
+    reflectiveness = r;
 
     envir_color = a_c;
     diffuse_color = d_c;
@@ -58,6 +59,10 @@ double PhongMaterial::get_highlight_factor() {
     return highlight_factor;
 }
 
+double PhongMaterial::get_reflectiveness() {
+    return reflectiveness;
+}
+
 Color PhongMaterial::get_envir_color() {
     return envir_color;
 }
@@ -84,6 +89,10 @@ void PhongMaterial::set_specular_factor(double a) {
 
 void PhongMaterial::set_highlight_factor(double a) {
     highlight_factor = a;
+}
+
+void PhongMaterial::set_reflectiveness(double a) {
+    reflectiveness = a;
 }
 
 void PhongMaterial::set_envir_color(Color c) {

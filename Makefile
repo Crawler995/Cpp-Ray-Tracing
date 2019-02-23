@@ -1,5 +1,5 @@
-main: main.o vector3.o ray3.o sphere.o perspective_camera.o geometry_union.o color.o utils.o phong_material.o plane.o
-	g++ -o main main.o vector3.o ray3.o sphere.o perspective_camera.o geometry_union.o color.o utils.o phong_material.o plane.o
+main: main.o vector3.o ray3.o sphere.o perspective_camera.o geometry_union.o color.o utils.o phong_material.o plane.o render_engine.o
+	g++ -o main main.o vector3.o ray3.o sphere.o perspective_camera.o geometry_union.o color.o utils.o phong_material.o plane.o render_engine.o
 main.o: main.cpp
 	g++ -c -o main.o main.cpp
 vector3.o: libs/vector3.cpp
@@ -20,6 +20,8 @@ phong_material.o: libs/phong_material.cpp
 	g++ -c -o phong_material.o libs/phong_material.cpp
 plane.o: libs/plane.cpp
 	g++ -c -o plane.o libs/plane.cpp
+render_engine.o: libs/render_engine.cpp
+	g++ -c -o render_engine.o libs/render_engine.cpp
 
 clean:
 	rm *.o *.exe
