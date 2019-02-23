@@ -17,7 +17,6 @@
 
 #define WIDTH 1920
 #define HEIGHT 1080
-#define MAX_DEPTH 2000
 #define SAMPLE_TIMES 50
 
 unsigned char output_img_data[WIDTH * HEIGHT * 3], *p = output_img_data;
@@ -105,9 +104,9 @@ int main(int argc, char const *argv[])
         end = clock();
         double run_time = (double)(end - start) / CLOCKS_PER_SEC;
 
-        std::cout << std::endl << "Render done! Spend " << run_time << "s." << std::endl;
-
         svpng(f, WIDTH, HEIGHT, output_img_data, 0);
+        
+        std::cout << std::endl << "Render done! Spend " << run_time << "s." << std::endl;
         fclose(f);
     }
 
