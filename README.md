@@ -11,9 +11,9 @@ After that, go to the program folder, open the command line and input like this:
 $ mingw32-make
 $ main
 ```
-Wait a moment, then you can find `test.ppm` in the folder which is a particular format image. You can use `Photoshop` or go to a website https://cloudconvert.com to transform it to a `png` or other format image.
+Wait a moment, after rendering you can find `test.png` in the folder.
   
 ## Feature
-No complicated C++ feature, based on very easy C++.<br>
+No complicated and new C++ feature, based on very easy C++.<br>
 Be suitable for the people who know about C++, begin to study Ray Tracing.<br>
 There is no comment in the code, I will add it in the future.
