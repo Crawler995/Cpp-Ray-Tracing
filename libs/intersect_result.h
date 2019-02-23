@@ -2,16 +2,15 @@
 #define INTERSECT_RESULT__
 
 #include "vector3.h"
-#include "sphere.h"
 
-class Sphere;
+class Geometry;
 
 struct IntersectResult {
-    Sphere* geometry;
+    Geometry* geometry;
     double distance;
     Vector3 position, normal;
 
-    IntersectResult(Sphere* s, double d, Vector3 pos, Vector3 nor) {
+    IntersectResult(Geometry* s, double d, Vector3 pos, Vector3 nor) {
         geometry = s;
         distance = d;
         position = pos;

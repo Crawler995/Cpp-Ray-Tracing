@@ -3,7 +3,6 @@
 #include "ray3.h"
 #include "color.h"
 #include <cmath>
-#include <algorithm>
 
 PhongMaterial::PhongMaterial(double a, double d, double s, double h, Color a_c, Color d_c, Color s_c) {
     envir_factor = a;

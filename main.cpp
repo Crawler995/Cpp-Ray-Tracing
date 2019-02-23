@@ -1,11 +1,12 @@
 #include <iostream>
 #include <cstdlib>
 #include <ctime>
-#include <algorithm>
 #include <string>
 #include "libs/vector3.h"
 #include "libs/ray3.h"
 #include "libs/sphere.h"
+#include "libs/plane.h"
+#include "libs/geometry.h"
 #include "libs/intersect_result.h"
 #include "libs/perspective_camera.h"
 #include "libs/geometry_union.h"
@@ -29,13 +30,20 @@ int main(int argc, char const *argv[])
         Vector3(0, 0, 0)
     );
 
-    PhongMaterial white;
-    white.set_diffuse_color(Color(255, 0, 0));
-    GeometryUnion geometry_union(3,
-        Sphere(Vector3(0, 200, -1300), 200, white),
-        Sphere(Vector3(200, 400, -1700), 400, white),
-        Sphere(Vector3(0, -10000, -1500), 10000, white)
+    PhongMaterial white(
+        0.2, 0.6, 0.2, 10,
+        Color(255, 255, 255),
+        Color(255, 255, 255),
+        Color(255, 255, 255)
     );
+
+    Sphere sphere_1(Vector3(0, 0, -1000), 200, white);
+    Sphere sphere_2(Vector3(200, 200, -1400), 400, white);
+    Plane plane_1(Vector3(0, 1, 0), Vector3(0, -100, 0), white);
+
+    Geometry *geos[3] = {&sphere_1, &sphere_2, &plane_1};
+
+    GeometryUnion geometry_union(3, geos);
     
     FILE *f = fopen("test.ppm", "wb");
     if(!f) {

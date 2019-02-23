@@ -9,17 +9,17 @@
 Sphere::Sphere(Vector3 c, double r, PhongMaterial m) {
     center = c;
     radius = r;
-    material = m;
+    set_material(m);
 }
 
 Sphere::Sphere() {
     center = Vector3(0, 0, 0);
     radius = 0;
-    material = PhongMaterial(0, 0, 0, 0, Color(0, 0, 0), Color(0, 0, 0), Color(0, 0, 0));
+    set_material(PhongMaterial(0, 0, 0, 0, Color(0, 0, 0), Color(0, 0, 0), Color(0, 0, 0)));
 }
 
 Sphere Sphere::copy() {
-    return Sphere(center, radius, material);
+    return Sphere(center, radius, get_material());
 }
 
 IntersectResult Sphere::intersect(Ray3 ray) {
@@ -49,9 +49,6 @@ double Sphere::get_radius() {
     return radius;
 }
 
-PhongMaterial Sphere::get_material() {
-    return material;
-}
 
 void Sphere::set_center(Vector3 c) {
     center = c;
@@ -59,8 +56,4 @@ void Sphere::set_center(Vector3 c) {
 
 void Sphere::set_radius(double r) {
     radius = r;
-}
-
-void Sphere::set_material(PhongMaterial m) {
-    material = m;
 }
