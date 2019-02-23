@@ -13,12 +13,14 @@
 #include "libs/color.h"
 #include "utils/utils.h"
 #include "libs/phong_material.h"
+#include "utils/svpng.inc"
 
 #define WIDTH 1920
 #define HEIGHT 1080
 #define MAX_DEPTH 2000
-#define SAMPLE_TIMES 1
+#define SAMPLE_TIMES 50
 
+unsigned char output_img_data[WIDTH * HEIGHT * 3], *p = output_img_data;
 
 int main(int argc, char const *argv[])
 {   
@@ -57,13 +59,11 @@ int main(int argc, char const *argv[])
 
     GeometryUnion geometry_union(3, geos);
     
-    FILE *f = fopen("test.ppm", "wb");
+    FILE *f = fopen("test.png", "wb");
     if(!f) {
         std::cout << "Create file failed, please try again." << std::endl;
     }
     else {
-        fprintf(f, "P3\n%d %d\n255\n", WIDTH, HEIGHT);
-
         int index = 0;
         int two_percent_num = WIDTH * HEIGHT / 50;
 
@@ -91,7 +91,9 @@ int main(int argc, char const *argv[])
 
                 color = color.multiply(1.0 / SAMPLE_TIMES);
 
-                fprintf(f, "%d %d %d\n", color.get_r(), color.get_g(), color.get_b());
+                *p++ = (unsigned char)color.get_r();
+                *p++ = (unsigned char)color.get_g();
+                *p++ = (unsigned char)color.get_b();
 
                 index++;
                 if(index % two_percent_num == 0) {
@@ -105,6 +107,7 @@ int main(int argc, char const *argv[])
 
         std::cout << std::endl << "Render done! Spend " << run_time << "s." << std::endl;
 
+        svpng(f, WIDTH, HEIGHT, output_img_data, 0);
         fclose(f);
     }
 
