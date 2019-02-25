@@ -17,3 +17,6 @@ Wait a moment, after rendering you can find `test.png` in the folder.
 No complicated and new C++ feature, based on very easy C++.<br>
 Be suitable for the people who know about C++, begin to study Ray Tracing.<br>
 There is no comment in the code, I will add it in the future.
+
+## Render result
+![1920*1080, 20 sample times, all Phong Material](https://github.com/Crawler995/Cpp-Ray-Tracing/blob/master/test_compressed.png)
