@@ -20,4 +20,4 @@ There is no comment in the code, I will add it in the future.
 
 ## Render result
 ![1920*1080, 20 sample times, all Phong Material](https://github.com/Crawler995/Cpp-Ray-Tracing/blob/master/test_compressed.png)
-1920*1080, sample times: 20, all Phong Material
+`1920*1080, sample times: 20, all Phong Material`
