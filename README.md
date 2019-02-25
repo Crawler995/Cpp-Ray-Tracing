@@ -25,4 +25,5 @@ There is no comment in the code, I will add it in the future.
 ## Reference
 1. [JavaScript玩转计算机图形学（一）光线追踪入门](http://www.cnblogs.com/miloyip/archive/2010/03/29/1698953.html)
 2. [Phong光照模型](https://wenku.baidu.com/view/4e6443ea9b89680202d8250f.html)
+3. [Ray Tracing in a weekend](http://www.realtimerendering.com/raytracing/Ray%20Tracing%20in%20a%20Weekend.pdf)
 3. 《计算机图形学与虚拟环境》 机械工业出版社
