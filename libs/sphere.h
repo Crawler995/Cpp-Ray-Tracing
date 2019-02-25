@@ -5,12 +5,12 @@
 #include "ray3.h"
 #include "intersect_result.h"
 #include "color.h"
-#include "phong_material.h"
+#include "material.h"
 #include "geometry.h"
 
 class Sphere: public Geometry {
     public:
-        Sphere(Vector3 c, double r, PhongMaterial m);
+        Sphere(Vector3 c, double r, Material *m);
         Sphere();
         Sphere copy();
         IntersectResult intersect(Ray3 ray);

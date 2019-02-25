@@ -16,23 +16,27 @@ RenderEngine::RenderEngine(int w, int h, int st, int rt) {
 }
 
 Color RenderEngine::ray_tracing_recursive(
-    Ray3 ray, 
-    GeometryUnion &geo_union, 
+    Ray3 ray,
+    GeometryUnion &geo_union,
     int reflect_times
 ) {
     IntersectResult res = geo_union.intersect(ray);
-
+    // std::cout << res.normal.get_y() << std::endl;
+    // std::cout << res.distance << std::endl;
     if(res.geometry) {
-        double reflectiveness = res.geometry -> get_material().get_reflectiveness();
-        Color color = res.geometry -> get_material().sample(ray, res.normal);
-        color = color.multiply(1.0 - reflectiveness);
+        double specular_factor = res.geometry -> get_material() -> get_specular_factor();
+        Color color = res.geometry -> get_material() -> sample(ray, res.position, res.normal);
+        color = color.multiply(1.0 - specular_factor);
 
-        if(reflect_times < max_reflect_times) {
-            Vector3 dir = res.normal.scale(-2.0 * res.normal.dot(ray.get_dir())).add(ray.get_dir());
-            ray = Ray3(res.position, dir);
-            Color reflect_color = ray_tracing_recursive(ray, geo_union, reflect_times + 1);
+        //std::cout << reflect_times << "r " << ray.get_origin().get_x() << " " << ray.get_origin().get_y() << " " << ray.get_origin().get_z() << ray.get_dir().get_y() << std::endl;
 
-            color = color.add(reflect_color.multiply(reflectiveness));
+        if(specular_factor > 0 && reflect_times < max_reflect_times) {
+            Vector3 dir = res.normal.scale(-2.0 * res.normal.dot(ray.get_dir())).add(ray.get_dir()).normalize();
+            Ray3 reflect_ray(res.position, dir);
+            //std::cout << reflect_times << "c " << reflect_ray.get_origin().get_x() << " " << reflect_ray.get_origin().get_y() << " " << reflect_ray.get_origin().get_z() << reflect_ray.get_dir().get_y() << std::endl;
+            Color reflect_color = ray_tracing_recursive(reflect_ray, geo_union, reflect_times + 1).multiply(specular_factor);
+            
+            color = color.add(reflect_color);
         }
 
         return color;
@@ -66,11 +70,7 @@ void RenderEngine::render(
                 double v = 1.0 * (i + rand_num_0_to_1()) / image_height;
 
                 Ray3 ray = camera.generate_ray(u, v);
-                IntersectResult res = geo_union.intersect(ray);
-
-                if(res.geometry) {
-                    color = color.add(ray_tracing_recursive(ray, geo_union, 0));
-                }
+                color = color.add(ray_tracing_recursive(ray, geo_union, 0));
             }
 
             color = color.multiply(1.0 / sample_times);
@@ -94,4 +94,9 @@ void RenderEngine::render(
     std::cout << std::endl << "Render done! Spend " << run_time << "s." << std::endl;
 
     fclose(f);
+}
+
+void RenderEngine::test(PerspectiveCamera &camera, GeometryUnion &geo_union) {
+    Ray3 ray = camera.generate_ray(0.5, 0.45);
+    Color color = ray_tracing_recursive(ray, geo_union, 0);
 }

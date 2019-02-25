@@ -17,6 +17,7 @@ class RenderEngine {
             FILE *f,
             unsigned char *output_img_data
         );
+        void test(PerspectiveCamera &camera, GeometryUnion &geo_union);
 
     private:
         int image_width, image_height, sample_times, max_reflect_times;

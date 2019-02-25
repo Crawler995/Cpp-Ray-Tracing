@@ -6,7 +6,7 @@
 #include "phong_material.h"
 #include <cmath>
 
-Sphere::Sphere(Vector3 c, double r, PhongMaterial m) {
+Sphere::Sphere(Vector3 c, double r, Material *m) {
     center = c;
     radius = r;
     set_material(m);
@@ -15,7 +15,9 @@ Sphere::Sphere(Vector3 c, double r, PhongMaterial m) {
 Sphere::Sphere() {
     center = Vector3(0, 0, 0);
     radius = 0;
-    set_material(PhongMaterial(0, 0, 0, 0, 0, Color(0, 0, 0), Color(0, 0, 0), Color(0, 0, 0)));
+
+    PhongMaterial m = PhongMaterial(0, 0, 0, 0, Color(0, 0, 0), Color(0, 0, 0), Color(0, 0, 0));
+    set_material(&m);
 }
 
 Sphere Sphere::copy() {

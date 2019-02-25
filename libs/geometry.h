@@ -1,17 +1,17 @@
 #ifndef GEOMETRY__
 #define GEOMETRY__
 
-#include "phong_material.h"
+#include "material.h"
 #include "intersect_result.h"
 #include "ray3.h"
 
 class Geometry {
     public:
-        PhongMaterial get_material() {
+        Material* get_material() {
             return material;
         }
 
-        void set_material(PhongMaterial material) {
+        void set_material(Material *material) {
             this -> material = material;
         }
 
@@ -19,7 +19,7 @@ class Geometry {
             return IntersectResult(0, 0, Vector3(0, 0, 0), Vector3(0, 0, 0));
         }
     private:
-        PhongMaterial material;
+        Material *material;
 };
 
 #endif
