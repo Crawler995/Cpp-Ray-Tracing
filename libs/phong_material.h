@@ -12,11 +12,11 @@ class PhongMaterial: public Material{
         PhongMaterial();
         Color sample(Ray3 ray, Vector3 position, Vector3 normal);
 
-        Color get_diffuse_color();
+        double get_highlight_factor();
 
-        void set_diffuse_color(Color c);
+        void set_highlight_factor(double highlight_factor);
     private:
-        Color diffuse_color;
+        double highlight_factor;
 };
 
 #endif

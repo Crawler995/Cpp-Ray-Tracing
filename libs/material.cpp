@@ -17,12 +17,12 @@ double Material::get_specular_factor() {
     return specular_factor;
 }
 
-double Material::get_highlight_factor() {
-    return highlight_factor;
-}
-
 Color Material::get_envir_color() {
     return envir_color;
+}
+
+Color Material::get_diffuse_color() {
+    return diffuse_color;
 }
 
 Color Material::get_specular_color() {
@@ -41,12 +41,12 @@ void Material::set_specular_factor(double a) {
     specular_factor = a;
 }
 
-void Material::set_highlight_factor(double a) {
-    highlight_factor = a;
-}
-
 void Material::set_envir_color(Color c) {
     envir_color = c;
+}
+
+void Material::set_diffuse_color(Color c) {
+    diffuse_color = c;
 }
 
 void Material::set_specular_color(Color c) {

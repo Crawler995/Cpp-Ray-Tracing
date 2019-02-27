@@ -40,6 +40,14 @@ double CheckMaterial::get_scale() {
     return scale;
 }
 
+double CheckMaterial::get_highlight_factor() {
+    return highlight_factor;
+}
+
 void CheckMaterial::set_scale(double a) {
     scale = a;
+}
+
+void CheckMaterial::set_highlight_factor(double highlight_factor) {
+    this -> highlight_factor = highlight_factor;
 }

@@ -9,6 +9,7 @@ class Color {
         Color add(Color c);
         Color multiply(double a);
         Color modulate(Color c);
+        void ensure_not_overflow();
 
         int get_r();
         int get_g();

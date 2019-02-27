@@ -42,10 +42,10 @@ Color PhongMaterial::sample(Ray3 ray, Vector3 position, Vector3 normal) {
     return res;
 }
 
-Color PhongMaterial::get_diffuse_color() {
-    return diffuse_color;
+double PhongMaterial::get_highlight_factor() {
+    return highlight_factor;
 }
 
-void PhongMaterial::set_diffuse_color(Color c) {
-    diffuse_color = c;
+void PhongMaterial::set_highlight_factor(double highlight_factor) {
+    this -> highlight_factor = highlight_factor;
 }

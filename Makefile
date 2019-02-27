@@ -1,5 +1,9 @@
-main: main.o vector3.o ray3.o sphere.o perspective_camera.o geometry_union.o color.o utils.o material.o phong_material.o checker_material.o plane.o render_engine.o
-	g++ -o main main.o vector3.o ray3.o sphere.o perspective_camera.o geometry_union.o color.o utils.o material.o phong_material.o checker_material.o plane.o render_engine.o
+main: main.o vector3.o ray3.o sphere.o perspective_camera.o geometry_union.o \
+color.o utils.o material.o phong_material.o checker_material.o cook_torrance_material.o \
+plane.o render_engine.o
+	g++ -o main main.o vector3.o ray3.o sphere.o perspective_camera.o geometry_union.o \
+	color.o utils.o material.o phong_material.o cook_torrance_material.o \
+	checker_material.o plane.o render_engine.o
 main.o: main.cpp
 	g++ -c -o main.o main.cpp
 vector3.o: libs/vector3.cpp
@@ -22,6 +26,8 @@ phong_material.o: libs/phong_material.cpp
 	g++ -c -o phong_material.o libs/phong_material.cpp
 checker_material.o: libs/checker_material.cpp
 	g++ -c -o checker_material.o libs/checker_material.cpp
+cook_torrance_material.o: libs/cook_torrance_material.cpp 
+	g++ -c -o cook_torrance_material.o libs/cook_torrance_material.cpp
 plane.o: libs/plane.cpp
 	g++ -c -o plane.o libs/plane.cpp
 render_engine.o: libs/render_engine.cpp

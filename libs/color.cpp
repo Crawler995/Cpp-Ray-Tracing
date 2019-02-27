@@ -26,6 +26,12 @@ Color Color::modulate(Color c) {
     return Color((int)R * c.R, (int)G * c.G, (int)B * c.B);
 }
 
+void Color::ensure_not_overflow() {
+    if(R > 255) R = 255;
+    if(G > 255) G = 255;
+    if(B > 255) B = 255;
+}
+
 int Color::get_r() {
     return R;
 }

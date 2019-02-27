@@ -21,24 +21,21 @@ Color RenderEngine::ray_tracing_recursive(
     int reflect_times
 ) {
     IntersectResult res = geo_union.intersect(ray);
-    // std::cout << res.normal.get_y() << std::endl;
-    // std::cout << res.distance << std::endl;
     if(res.geometry) {
         double specular_factor = res.geometry -> get_material() -> get_specular_factor();
         Color color = res.geometry -> get_material() -> sample(ray, res.position, res.normal);
         color = color.multiply(1.0 - specular_factor);
 
-        //std::cout << reflect_times << "r " << ray.get_origin().get_x() << " " << ray.get_origin().get_y() << " " << ray.get_origin().get_z() << ray.get_dir().get_y() << std::endl;
-
         if(specular_factor > 0 && reflect_times < max_reflect_times) {
             Vector3 dir = res.normal.scale(-2.0 * res.normal.dot(ray.get_dir())).add(ray.get_dir()).normalize();
             Ray3 reflect_ray(res.position, dir);
-            //std::cout << reflect_times << "c " << reflect_ray.get_origin().get_x() << " " << reflect_ray.get_origin().get_y() << " " << reflect_ray.get_origin().get_z() << reflect_ray.get_dir().get_y() << std::endl;
+
             Color reflect_color = ray_tracing_recursive(reflect_ray, geo_union, reflect_times + 1).multiply(specular_factor);
             
             color = color.add(reflect_color);
         }
 
+        color.ensure_not_overflow();
         return color;
     }
     else {

@@ -13,10 +13,12 @@ class CheckMaterial: public Material {
         Color sample(Ray3 ray, Vector3 position, Vector3 normal);
 
         double get_scale();
+        double get_highlight_factor();
 
         void set_scale(double a);
+        void set_highlight_factor(double highlight_factor);
     private:
-        double scale;
+        double scale, highlight_factor;
 };
 
 #endif
